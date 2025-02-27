@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: k8s_ha_cluster
-  namespace: your_namespace  # Change to your Galaxy username
+  namespace: salwan-mohamed
   author: Your Name
   description: Ansible role to deploy a highly available Kubernetes cluster with external etcd
   company: Your Company (Optional)
