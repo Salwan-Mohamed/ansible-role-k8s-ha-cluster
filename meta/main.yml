@@ -1,6 +1,10 @@
 ---
 galaxy_info:
+<<<<<<< HEAD
   author: "Salwan Mohamed"
+=======
+  author: "Salwan MOhamed"
+>>>>>>> 0f825e98e083a41818458f8df2ebfa6c5de6de56
   description: "Ansible role to deploy a highly available Kubernetes cluster with external etcd"
   company: "Your Company (Optional)"
   license: "MIT"
