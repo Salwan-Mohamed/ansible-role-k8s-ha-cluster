@@ -1,0 +1,35 @@
+---
+# Configure HAProxy and Keepalived
+
+- name: Install HAProxy
+  apt:
+    name: haproxy
+    state: present
+
+- name: Configure HAProxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+  notify: restart haproxy
+
+- name: Install Keepalived
+  apt:
+    name: keepalived
+    state: present
+
+- name: Configure Keepalived for the MASTER node
+  template:
+    src: keepalived-master.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: 0644
+  when: inventory_hostname == groups['haproxy'][0]
+  notify: restart keepalived
+
+- name: Configure Keepalived for the BACKUP node
+  template:
+    src: keepalived-backup.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: 0644
+  when: inventory_hostname == groups['haproxy'][1]
+  notify: restart keepalived

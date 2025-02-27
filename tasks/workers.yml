@@ -1,0 +1,8 @@
+---
+# Configure Kubernetes worker nodes
+
+- name: Join worker nodes to the cluster
+  shell: "{{ hostvars[groups['control_plane'][0]].worker_join_command }}"
+  args:
+    creates: /etc/kubernetes/kubelet.conf
+  when: hostvars[groups['control_plane'][0]].worker_join_command is defined

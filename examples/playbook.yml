@@ -1,0 +1,26 @@
+---
+- name: Deploy High-Availability Kubernetes Cluster
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  pre_tasks:
+    - name: Check if ansible can connect to all hosts
+      ping:
+      
+  roles:
+    - role: yourusername.k8s_ha_cluster
+      
+  post_tasks:
+    - name: Verify cluster status
+      command: kubectl get nodes -o wide
+      register: node_status
+      changed_when: false
+      run_once: true
+      delegate_to: "{{ groups['control_plane'][0] }}"
+      
+    - name: Display cluster status
+      debug:
+        var: node_status.stdout_lines
+      run_once: true
+      delegate_to: "{{ groups['control_plane'][0] }}"

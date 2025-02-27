@@ -1,0 +1,38 @@
+---
+all:
+  children:
+    control_plane:
+      hosts:
+        master01:
+          ansible_host: 10.1.5.2
+        master02:
+          ansible_host: 10.1.5.3
+        master03:
+          ansible_host: 10.1.5.4
+    etcd:
+      hosts:
+        etcd01:
+          ansible_host: 10.1.5.5
+        etcd02:
+          ansible_host: 10.1.5.6
+        etcd03:
+          ansible_host: 10.1.5.7
+    haproxy:
+      hosts:
+        haproxy01:
+          ansible_host: 10.1.5.8
+        haproxy02:
+          ansible_host: 10.1.5.9
+    workers:
+      hosts:
+        worker01:
+          ansible_host: 10.1.5.11
+        worker02:
+          ansible_host: 10.1.5.12
+        worker03:
+          ansible_host: 10.1.5.13
+  vars:
+    ansible_user: ubuntu  # Change to your SSH user
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa  # Change to your SSH key path
+    ansible_become: true
+    upgrade_system: false  # Set to true to perform apt upgrade on all nodes

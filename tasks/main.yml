@@ -1,0 +1,21 @@
+---
+# Main playbook for k8s-ha-cluster role
+- name: Include common tasks for all nodes
+  include_tasks: common.yml
+  when: inventory_hostname in groups['all']
+
+- name: Include etcd tasks
+  include_tasks: etcd.yml
+  when: inventory_hostname in groups['etcd']
+
+- name: Include HAProxy and Keepalived tasks
+  include_tasks: haproxy.yml
+  when: inventory_hostname in groups['haproxy']
+
+- name: Include control plane tasks
+  include_tasks: control-plane.yml
+  when: inventory_hostname in groups['control_plane']
+
+- name: Include worker tasks
+  include_tasks: workers.yml
+  when: inventory_hostname in groups['workers']

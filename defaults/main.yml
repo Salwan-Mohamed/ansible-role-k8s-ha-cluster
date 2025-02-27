@@ -1,0 +1,69 @@
+---
+# Kubernetes version
+kubernetes_version: "1.30"
+kubernetes_cni_plugin_url: "https://docs.projectcalico.org/manifests/calico.yaml"
+
+# Network Configuration
+pod_network_cidr: "192.168.0.0/16"
+service_network_cidr: "10.96.0.0/12"
+
+# Node IP addresses
+control_plane_nodes:
+  - hostname: master01
+    ip: 10.1.5.2
+  - hostname: master02
+    ip: 10.1.5.3
+  - hostname: master03
+    ip: 10.1.5.4
+
+etcd_nodes:
+  - hostname: etcd01
+    ip: 10.1.5.5
+  - hostname: etcd02
+    ip: 10.1.5.6
+  - hostname: etcd03
+    ip: 10.1.5.7
+
+haproxy_nodes:
+  - hostname: haproxy01
+    ip: 10.1.5.8
+    state: MASTER
+    priority: 101
+  - hostname: haproxy02
+    ip: 10.1.5.9
+    state: BACKUP
+    priority: 100
+
+worker_nodes:
+  - hostname: worker01
+    ip: 10.1.5.11
+  - hostname: worker02
+    ip: 10.1.5.12
+  - hostname: worker03
+    ip: 10.1.5.13
+
+# Load balancer configuration
+virtual_ip: 10.1.5.10
+virtual_ip_interface: "ens3"
+virtual_router_id: 51
+keepalived_auth_pass: "K8SHA_KP"
+
+# etcd configuration
+etcd_version: "v3.5.9"
+etcd_cluster_token: "etcd-cluster-1"
+etcd_data_dir: "/var/lib/etcd"
+
+# containerd configuration
+containerd_version: "latest"
+
+# Metrics server
+install_metrics_server: true
+
+# RBAC
+create_admin_account: true
+admin_service_account: "cluster-admin-sa"
+
+# Additional tools
+install_helm: true
+install_velero: false
+velero_version: "v1.10.1"

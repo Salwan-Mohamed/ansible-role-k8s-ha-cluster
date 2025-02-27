@@ -1,0 +1,29 @@
+---
+- name: restart containerd
+  service:
+    name: containerd
+    state: restarted
+
+- name: restart etcd
+  service:
+    name: etcd
+    state: restarted
+    enabled: yes
+
+- name: restart haproxy
+  service:
+    name: haproxy
+    state: restarted
+    enabled: yes
+
+- name: restart keepalived
+  service:
+    name: keepalived
+    state: restarted
+    enabled: yes
+
+- name: restart kubelet
+  service:
+    name: kubelet
+    state: restarted
+    enabled: yes

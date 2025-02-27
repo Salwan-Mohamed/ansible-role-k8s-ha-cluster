@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  role_name: k8s_ha_cluster
+  namespace: your_namespace  # Change to your Galaxy username
+  author: Your Name
+  description: Ansible role to deploy a highly available Kubernetes cluster with external etcd
+  company: Your Company (Optional)
+  
+  license: MIT
+  
+  min_ansible_version: 2.9
+  
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  
+  galaxy_tags:
+    - kubernetes
+    - k8s
+    - ha
+    - cluster
+    - etcd
+    - kubeadm
+    - containerd
+    - haproxy
+    - keepalived
+    - highavailability
+  
+  dependencies: []
