@@ -66,7 +66,7 @@ HAProxy: 1 CPU, 2GB RAM, 20GB disk
 
 
 
-Networking Requirements
+##Networking Requirements
 The following ports must be open:
 HAProxy Nodes
 
@@ -96,7 +96,7 @@ bashCopyansible-galaxy install yourusername.k8s_ha_cluster
 Or add to your requirements.yml:
 yamlCopy---
 roles:
-  - name: yourusername.k8s_ha_cluster
+  - name: salwan-mohamed.k8s_ha_cluster
     version: v1.0.0
 Then install:
 bashCopyansible-galaxy install -r requirements.yml
