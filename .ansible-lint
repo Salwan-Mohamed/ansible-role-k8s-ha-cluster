@@ -1,0 +1,15 @@
+---
+exclude_paths:
+  - .git/
+  - .github/
+  - molecule/
+  - .yamllint
+
+skip_list:
+  - yaml[line-length]
+  - no-handler
+  - command-instead-of-module  # We need to use command for kubeadm operations
+
+warn_list:
+  - experimental
+  - yaml[truthy]
