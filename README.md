@@ -1,6 +1,6 @@
 # Kubernetes High Availability Cluster Ansible Role
 
-[![Ansible Galaxy](https://img.shields.io/badge/galaxy-salwan-mohamed.k8s_ha_cluster-blue.svg)](https://galaxy.ansible.com/salwan-mohamed/k8s_ha_cluster)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxysalwan-mohamed.k8s_ha_cluster-blue.svg)](https://galaxy.ansible.com/salwan-mohamed/k8s_ha_cluster)
 [![GitHub Actions](https://github.com/salwan-mohamed/ansible-role-k8s-ha-cluster/workflows/Ansible%20Lint/badge.svg)](https://github.com/salwan-mohamed/ansible-role-k8s-ha-cluster/actions)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 
