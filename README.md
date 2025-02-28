@@ -12,37 +12,10 @@ This Ansible role automates the deployment of a production-ready, high-availabil
 - 3 Worker Nodes (worker01-03)
 
 ## Architecture
+![topology](https://github.com/user-attachments/assets/26bd95b0-cb91-4c69-a9c8-214e7add9192)
 
 The architecture follows Kubernetes best practices for a production-grade deployment:
-┌────────────┐
-                       │   Client   │
-                       └─────┬──────┘
-                             │
-                             ▼
-                        (10.1.5.10)
-                      Virtual IP (VIP)
-                             │
-                 ┌───────────┴──────────┐
-                 │                      │
-           ┌─────▼─────┐          ┌─────▼─────┐
-           │  HAProxy1 │          │  HAProxy2 │
-           └─────┬─────┘          └─────┬─────┘
-                 │                      │
-                 ──────────┐
-│                  │                      │                      │
-┌─▼───────────┐ ┌────▼────────┐ ┌───────────▼──┐                  │
-│  Master01   │ │   Master02  │ │   Master03   │                  │
-└─┬───────────┘ └─┬───────────┘ └─┬────────────┘                  │
-│               │               │                               │
-│  Control Plane Nodes          │                               │
-└───────────────┼───────────────┘                               │
-│                                               │
-┌────────────┼──────────────┬──────────────────┐             │
-│            │              │                  │             │
-┌────▼─────┐ ┌────▼─────┐ ┌──────▼─────┐       ┌────▼─────┐ ┌─────▼────┐ ┌─────▼────┐
-│  etcd01  │ │  etcd02  │ │   etcd03   │       │ Worker01 │ │ Worker02 │ │ Worker03 │
-└──────────┘ └──────────┘ └────────────┘       └──────────┘ └──────────┘ └──────────┘
-External etcd Cluster                          Worker Nodes
+                       
 
 Benefits of this architecture:
 
