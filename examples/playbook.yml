@@ -9,7 +9,7 @@
       ping:
       
   roles:
-    - role: yourusername.k8s_ha_cluster
+    - role: salwan-mohamed.k8s_ha_cluster
       
   post_tasks:
     - name: Verify cluster status
