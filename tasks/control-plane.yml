@@ -18,14 +18,16 @@
 - name: Store kubeadm join command for control plane nodes
   set_fact:
     control_plane_join_command: "{{ kubeadm_init.stdout | regex_search('\\s*kubeadm join.*--control-plane.*') }}"
-  when: 
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - kubeadm_init.stdout is defined
 
 - name: Store kubeadm join command for worker nodes
   set_fact:
-    worker_join_command: "{{ kubeadm_init.stdout | regex_search('\\s*kubeadm join.*discovery-token.*') | regex_replace('--control-plane.*$', '') }}"
-  when: 
+    worker_join_command: >-
+      {{ kubeadm_init.stdout | regex_search('\\s*kubeadm join.*discovery-token.*') 
+      | regex_replace('--control-plane.*$', '') }}
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - kubeadm_init.stdout is defined
 
@@ -41,7 +43,7 @@
     src: /etc/kubernetes/admin.conf
     dest: ~/.kube/config
     mode: 0644
-    remote_src: yes
+    remote_src: 'yes'
   when: inventory_hostname in groups['control_plane']
   register: copy_kubeconfig
 
@@ -51,7 +53,7 @@
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
     mode: 0600
-  when: 
+  when:
     - inventory_hostname in groups['control_plane']
     - copy_kubeconfig.changed
 
@@ -66,14 +68,16 @@
     --apiserver-advertise-address={{ hostvars[inventory_hostname].ansible_host }}
   args:
     creates: /etc/kubernetes/kubelet.conf
-  when: 
+  when:
     - inventory_hostname in groups['control_plane']
     - inventory_hostname != groups['control_plane'][0]
     - hostvars[groups['control_plane'][0]].control_plane_join_command is defined
 
 - name: Install metrics-server
-  command: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability.yaml
-  when: 
+  command: >-
+    kubectl apply -f 
+    https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability.yaml
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - install_metrics_server | bool
   changed_when: false
@@ -89,22 +93,24 @@
 - name: Create admin service account
   command: kubectl create serviceaccount {{ admin_service_account }}
   register: create_sa
-  failed_when: 
-    - create_sa.rc != 0 
+  failed_when:
+    - create_sa.rc != 0
     - "'already exists' not in create_sa.stderr"
   changed_when: create_sa.rc == 0
-  when: 
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - create_admin_account | bool
 
 - name: Create cluster role binding for admin account
-  command: kubectl create clusterrolebinding {{ admin_service_account }} --clusterrole=cluster-admin --serviceaccount=default:{{ admin_service_account }}
+  command: >-
+    kubectl create clusterrolebinding {{ admin_service_account }} 
+    --clusterrole=cluster-admin --serviceaccount=default:{{ admin_service_account }}
   register: create_crb
-  failed_when: 
-    - create_crb.rc != 0 
+  failed_when:
+    - create_crb.rc != 0
     - "'already exists' not in create_crb.stderr"
   changed_when: create_crb.rc == 0
-  when: 
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - create_admin_account | bool
 
@@ -120,6 +126,6 @@
       command: /tmp/get_helm.sh
       args:
         creates: /usr/local/bin/helm
-  when: 
+  when:
     - inventory_hostname == groups['control_plane'][0]
     - install_helm | bool
