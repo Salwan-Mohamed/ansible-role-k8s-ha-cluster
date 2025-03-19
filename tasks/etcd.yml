@@ -20,14 +20,14 @@
       unarchive:
         src: "/tmp/etcd-{{ etcd_version }}-linux-amd64.tar.gz"
         dest: /tmp
-        remote_src: yes
+        remote_src: 'yes'
 
     - name: Move etcd binaries to system path
       copy:
         src: "/tmp/etcd-{{ etcd_version }}-linux-amd64/{{ item }}"
         dest: "/usr/local/bin/{{ item }}"
         mode: 0755
-        remote_src: yes
+        remote_src: 'yes'
       loop:
         - etcd
         - etcdctl
@@ -70,7 +70,7 @@
     - name: Create etcd user
       user:
         name: etcd
-        system: yes
+        system: 'yes'
         shell: /bin/false
         home: "{{ etcd_data_dir }}"
 
@@ -80,7 +80,7 @@
         owner: etcd
         group: etcd
         state: directory
-        recurse: yes
+        recurse: 'yes'
   when: etcd_install_result is failed
 
 - name: Configure etcd server
@@ -94,7 +94,7 @@
   service:
     name: etcd
     state: started
-    enabled: yes
+    enabled: 'yes'
 
 - name: Wait for etcd cluster to be ready
   shell: "ETCDCTL_API=3 etcdctl member list --endpoints=http://{{ item.ip }}:2379"
